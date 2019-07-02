@@ -1,6 +1,7 @@
 import React , { Component } from 'react';
 import { Platform, StyleSheet, Text, View, Dimensions, Image, FlatList, TouchableHighlight, Alert} from 'react-native';
 import FontAwesome, { Icons } from 'react-native-fontawesome';
+import  Swiper  from 'react-native-swiper';
 
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -27,24 +28,24 @@ export default class CardPage extends Component{
 
     _renderItem = ({item})=>(
       <View style = {{ flex:1, position:'relative', height:SCREEN_HEIGHT, width: SCREEN_WIDTH}}>
-      <View style = {{ flex:2 , backgroundColor:'black'}}>
+      <View style = {{ flex:0.5 , backgroundColor:'black'}}>
         <Image source = { item.uri}
-            style = {{ flex:1, height:null, width:null, resize:'center'}}
+            style = {styles.image}
+            resizeMode="cover"
         >
         </Image>
       </View>
-      <View style = {{ flex:3, padding:5 }}>
-        <Text style={{lineHeight:35,fontSize:25}}>{item.story}</Text>
-      </View>
-      <View style={{ flex:1, position:'relative'}}>
-        <TouchableHighlight
-          onPress = { () => this.onPressBookmark(item.id)}
-        >
-          <Text style={{margin: 10, fontSize: 30, textAlign: 'left'}}>
-            <FontAwesome>{Icons.bookmark }</FontAwesome> 
-          </Text>
-        </TouchableHighlight>
-      </View>
+      <Swiper>
+        <View style = {styles.containerStyle}>
+          <Text style={{lineHeight:35,fontSize:25}}>{item.story}</Text>
+        </View>
+        <View style = {styles.containerStyle}>
+          <Text style={{lineHeight:35,fontSize:25}}>{item.story}</Text>
+        </View>
+        <View style = {styles.containerStyle}>
+          <Text style={{lineHeight:35,fontSize:25}}>{item.story}</Text>
+        </View>
+      </Swiper>
   </View>
     );
 
@@ -59,3 +60,30 @@ export default class CardPage extends Component{
       )
     }
 }
+
+const styles = StyleSheet.create({
+  containerStyle: {
+    flex:2,
+    padding:10,
+    borderWidth: 1,
+    borderRadius: 5,
+    borderColor: '#ddd',
+    borderBottomWidth: 0,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 2,
+    marginLeft: 5,
+    marginRight: 5,
+    marginTop: 10,
+    marginBottom:20
+  },
+
+  image:{
+    flex:1,
+    height:null,
+    width:SCREEN_WIDTH,
+    borderRadius:5
+  }
+})
