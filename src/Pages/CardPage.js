@@ -1,8 +1,8 @@
 import React , { Component } from 'react';
-import { Platform, StyleSheet, Text, View, Dimensions, Image, FlatList, TouchableHighlight, Alert} from 'react-native';
-import FontAwesome, { Icons } from 'react-native-fontawesome';
+import { StyleSheet, Text, View, Dimensions, Image, FlatList, Button, Alert, CameraRoll,PermissionsAndroid } from 'react-native';
+import Share from 'react-native-share';
 import  Swiper  from 'react-native-swiper';
-
+import {captureScreen} from 'react-native-view-shot';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -13,8 +13,49 @@ export default class CardPage extends Component{
       super(props)
 
       this.state = {
-          bookmark : []
+          bookmark : [],
+          imageUri: ''
       }
+
+    }
+
+    requestExternalStoragePermission = async () => {
+      try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+          {
+            title: 'My App Storage Permission',
+            message: 'My App needs access to your storage ' +
+              'so you can save your photos',
+          },
+        );
+        return granted;
+      } catch (err) {
+        console.error('Failed to request permission ', err);
+        return null;
+      }
+    };
+
+    handleShare = () =>{
+      this.requestExternalStoragePermission();
+      captureScreen({
+        format: "jpg",
+        quality: 0.8
+      })
+      .then(
+        uri => this.setState({imageUri:uri}),
+        error => console.error("Oops, snapshot failed", error)
+      );
+        this.ShareImage();
+    }
+
+    ShareImage = () =>{
+        let shareimage = {
+          title:'React Native',
+          url:this.state.imageUri,
+          social:Share.Social.WHATSAPP
+        };
+        Share.open(shareimage).catch(err=>console.log(err))
     }
 
     onPressBookmark = (itemId)=>{ 
@@ -27,20 +68,32 @@ export default class CardPage extends Component{
     _keyExtractor = (item,index)=>item.id;
 
     _renderItem = ({item})=>(
-      <View style = {{ flex:1, position:'relative', height:SCREEN_HEIGHT, width: SCREEN_WIDTH}}>
-      <View style = {{ flex:0.5 , backgroundColor:'black'}}>
+      <View style = {{ flex:1, position:'relative', height:SCREEN_HEIGHT, width: SCREEN_WIDTH, backgroundColor:'white'}} >
+      <View style = {{ flex:0.5 , backgroundColor:'white'}}>
         <Image source = { item.uri}
             style = {styles.image}
             resizeMode="cover"
         >
         </Image>
       </View>
-      <Swiper>
+     <Swiper>
         <View style = {styles.containerStyle}>
-          <Text style={{lineHeight:35,fontSize:25}}>{item.story}</Text>
+            <Text style={{lineHeight:35,fontSize:25}}>{item.story}</Text>
+            <Button
+            onPress={this.handleShare}
+            title="Share"
+            color="#841584"
+            accessibilityLabel="Learn more about this purple button"
+            />
         </View>
         <View style = {styles.containerStyle}>
-          <Text style={{lineHeight:35,fontSize:25}}>{item.story}</Text>
+            <Text style={{lineHeight:35,fontSize:25}}>{item.story}</Text>
+            <Button
+            onPress={this.handleShare}
+            title="Share"
+            color="#841584"
+            accessibilityLabel="Learn more about this purple button"
+            />
         </View>
         <View style = {styles.containerStyle}>
           <Text style={{lineHeight:35,fontSize:25}}>{item.story}</Text>
@@ -79,6 +132,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom:20
   },
+
 
   image:{
     flex:1,
