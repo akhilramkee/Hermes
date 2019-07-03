@@ -43,16 +43,16 @@ export default class CardPage extends Component{
         quality: 0.8
       })
       .then(
-        uri => this.setState({imageUri:uri}),
+        uri => {this.setState({imageUri:uri},()=>{this.ShareImage()})},
         error => console.error("Oops, snapshot failed", error)
       );
-        this.ShareImage();
+      
     }
 
     ShareImage = () =>{
         let shareimage = {
           title:'React Native',
-          url:this.state.imageUri,
+          url: this.state.imageUri,
           subject:'Share content',
           message:'News Brought forward by Datopsys'
         };
@@ -78,27 +78,20 @@ export default class CardPage extends Component{
         </Image>
       </View>
      <Swiper>
+        {
+        item.story.map((data)=>(
         <View style = {styles.containerStyle}>
-            <Text style={{lineHeight:35,fontSize:25}}>{item.story}</Text>
+            <Text style={{lineHeight:35,fontSize:25}}>{data}</Text>
             <Button
             onPress={this.handleShare}
             title="Share"
-            color="#841584"
+            style={{     alignSelf: 'flex-end',
+            position: 'absolute',
+            bottom: 35}}
             accessibilityLabel="Learn more about this purple button"
             />
         </View>
-        <View style = {styles.containerStyle}>
-            <Text style={{lineHeight:35,fontSize:25}}>{item.story}</Text>
-            <Button
-            onPress={this.handleShare}
-            title="Share"
-            color="#841584"
-            accessibilityLabel="Learn more about this purple button"
-            />
-        </View>
-        <View style = {styles.containerStyle}>
-          <Text style={{lineHeight:35,fontSize:25}}>{item.story}</Text>
-        </View>
+        ))}
       </Swiper>
   </View>
     );
