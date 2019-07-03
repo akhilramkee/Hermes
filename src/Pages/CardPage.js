@@ -53,7 +53,8 @@ export default class CardPage extends Component{
         let shareimage = {
           title:'React Native',
           url:this.state.imageUri,
-          social:Share.Social.WHATSAPP
+          subject:'Share content',
+          message:'News Brought forward by Datopsys'
         };
         Share.open(shareimage).catch(err=>console.log(err))
     }
