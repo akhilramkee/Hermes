@@ -32,11 +32,19 @@ Build The App:
 
 >[react-native-swiper](https://github.com/leecade/react-native-swiper/blob/master/src/index.js) 
 
-This packages helped to implement horizontal swipe feature , which is based out on ViewPagerAndroid 
+This package helped to implement horizontal swipe feature , which is based out on ViewPagerAndroid 
 present in React native package.
 
 The swiper is built on top of the scroll view , which tends to make it customisable with lot of features.
 
 Example of implementation of a [swiper](https://www.npmjs.com/package/react-native-swiper)
 
+>[react-native-share](https://github.com/react-native-community/react-native-share)
 
+ React-native-share provides support to share across various social platform with customizable messages.
+
+>[react-native-view-shot](https://github.com/gre/react-native-view-shot)
+
+Provides support to capture the current screen programmatically. Various implementation provides us with flexibilty to choose the suitable package as required.
+
+Example of implementation is provided in [snap-shot](https://github.com/gre/react-native-view-shot)
