@@ -1,8 +1,10 @@
 import React , { Component } from 'react';
-import { StyleSheet, Text, View, Dimensions, Image, FlatList, Button, Alert, CameraRoll,PermissionsAndroid } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, Image, FlatList, Button, Alert, CameraRoll,PermissionsAndroid , Animated } from 'react-native';
 import Share from 'react-native-share';
 import  Swiper  from 'react-native-swiper';
 import {captureScreen} from 'react-native-view-shot';
+import  Card from './Card';
+import { throwStatement } from '@babel/types';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -59,50 +61,45 @@ export default class CardPage extends Component{
         Share.open(shareimage).catch(err=>console.log(err))
     }
 
-    onPressBookmark = (itemId)=>{ 
-      this.setState([...this.state.bookmark,itemId])
-      Alert.alert(
-        this.state.bookmark
-      );
-    };
-
     _keyExtractor = (item,index)=>item.id;
 
-    _renderItem = ({item})=>(
-      <View style = {{ flex:1, position:'relative', height:SCREEN_HEIGHT, width: SCREEN_WIDTH, backgroundColor:'white'}} >
-      <View style = {{ flex:0.5 , backgroundColor:'white'}}>
-        <Image source = { item.uri}
-            style = {styles.image}
-            resizeMode="cover"
-        >
-        </Image>
-      </View>
-     <Swiper>
-        {
-        item.story.map((data)=>(
-        <View style = {styles.containerStyle}>
-            <Text style={{lineHeight:35,fontSize:25}}>{data}</Text>
-            <Button
-            onPress={this.handleShare}
-            title="Share"
-            style={{     alignSelf: 'flex-end',
-            position: 'absolute',
-            bottom: 35}}
-            accessibilityLabel="Learn more about this purple button"
-            />
-        </View>
-        ))}
+    renderCards(item){
+      return(
+          <View style = {{ flex:1, position:'relative', height:SCREEN_HEIGHT, width: SCREEN_WIDTH, backgroundColor:'white'}} >
+            <View style = {{ flex:0.5 , backgroundColor:'white'}}>
+              <Image source = { item.uri}
+                  style = {styles.image}
+                  resizeMode="cover"
+              >
+              </Image>
+            </View>
+          <Swiper>
+              {
+              item.story.map((data)=>(
+              <View style = {styles.containerStyle}>
+                  <Text style={{lineHeight:35,fontSize:25}}>{data}</Text>
+                  <Button
+                  onPress={this.handleShare}
+                  title="Share"
+                  style={{     alignSelf: 'flex-end',
+                  position: 'absolute',
+                  bottom: 35}}
+                  accessibilityLabel="Learn more about this purple button"
+                  />
+              </View>
+          ))}
       </Swiper>
   </View>
-    );
+      )}
+
 
     render(){
       return(
-        <FlatList
+        <Card
+          keyProps = "id"
           data = {this.props.ARTICLE}
-          extradata = { this.state}
-          _keyExtractor = { this._keyExtractor}
-          renderItem = {this._renderItem}
+          renderCard = { this.renderCards}
+          renderNoMoreCards = { this.renderCards}
         />
       )
     }
