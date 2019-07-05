@@ -1,10 +1,10 @@
 import React , { Component } from 'react';
-import { StyleSheet, Text, View, Dimensions, Image, FlatList, Button, Alert, CameraRoll,PermissionsAndroid , Animated } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, Image, FlatList, Button, Alert, CameraRoll,PermissionsAndroid , ToastAndroid} from 'react-native';
 import Share from 'react-native-share';
 import  Swiper  from 'react-native-swiper';
 import {captureScreen} from 'react-native-view-shot';
-import  Card from './Card';
-import { throwStatement } from '@babel/types';
+import  Swipe from './Swipe';
+
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -39,7 +39,6 @@ export default class CardPage extends Component{
     };
 
     handleShare = () =>{
-      this.requestExternalStoragePermission();
       captureScreen({
         format: "jpg",
         quality: 0.8
@@ -70,8 +69,7 @@ export default class CardPage extends Component{
               <Image source = { item.uri}
                   style = {styles.image}
                   resizeMode="cover"
-              >
-              </Image>
+              />
             </View>
           <Swiper>
               {
@@ -79,12 +77,8 @@ export default class CardPage extends Component{
               <View style = {styles.containerStyle}>
                   <Text style={{lineHeight:35,fontSize:25}}>{data}</Text>
                   <Button
-                  onPress={this.handleShare}
-                  title="Share"
-                  style={{     alignSelf: 'flex-end',
-                  position: 'absolute',
-                  bottom: 35}}
-                  accessibilityLabel="Learn more about this purple button"
+                    onPress = {this.handleShare}
+                    title ="Share"
                   />
               </View>
           ))}
@@ -95,11 +89,12 @@ export default class CardPage extends Component{
 
     render(){
       return(
-        <Card
+        <Swipe
           keyProps = "id"
           data = {this.props.ARTICLE}
           renderCard = { this.renderCards}
           renderNoMoreCards = { this.renderCards}
+          handleShare = { this.handleShare }
         />
       )
     }
