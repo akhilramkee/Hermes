@@ -4,6 +4,7 @@ import Share from 'react-native-share';
 import  Swiper  from 'react-native-swiper';
 import {captureScreen} from 'react-native-view-shot';
 import  Swipe from './Swipe';
+import {Icon} from 'react-native-elements';
 
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -76,9 +77,11 @@ export default class CardPage extends Component{
               item.story.map((data)=>(
               <View style = {styles.containerStyle}>
                   <Text style={{lineHeight:35,fontSize:25}}>{data}</Text>
-                  <Button
+                  <Icon
+                    containerStyle={{position:'absolute',bottom:40,right:40}}
+                    name='share'
+                    type='FontAwesome'
                     onPress = {this.handleShare}
-                    title ="Share"
                   />
               </View>
           ))}
