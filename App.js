@@ -7,7 +7,6 @@
  */
 
 import React, {Component} from 'react';
-import { Platform, StyleSheet, Text, View, Dimensions, Image, Animated, PanResponder} from 'react-native';
 import CardPage from './src/Pages/CardPage';
 
 const ARTICLE = [
@@ -24,22 +23,3 @@ export default class App extends Component{
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});

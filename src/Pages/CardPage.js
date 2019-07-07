@@ -39,7 +39,16 @@ export default class CardPage extends Component{
       }
     };
 
+    setbookmark = (id) =>{
+      if(!(this.state.bookmark.includes(id))){
+        this.setState({bookmark:[...this.state.bookmark,id]},()=>{alert(this.state.bookmark)})
+      }else{
+        this.setState({bookmark:this.state.bookmark.filter(item => item !=id)},()=>alert(this.state.bookmark))
+      }
+    }
+
     handleShare = () =>{
+
       captureScreen({
         format: "jpg",
         quality: 0.8
@@ -76,7 +85,12 @@ export default class CardPage extends Component{
               {
               item.story.map((data)=>(
               <View style = {styles.containerStyle}>
-                  <Text style={{lineHeight:35,fontSize:25}}>{data}</Text>
+                  <Icon
+                    containerStyle = {{ size:'2',position:'absolute',top:0,right:20,zIndex:99}}
+                    name='bookmark'
+                    onPress = {()=>this.setbookmark(item.id)}
+                  />                            
+                  <Text style={{lineHeight:35,fontSize:25,paddingTop:20}}>{data}</Text>
                   <Icon
                     containerStyle={{position:'absolute',bottom:40,right:40}}
                     name='share'
@@ -98,6 +112,7 @@ export default class CardPage extends Component{
           renderCard = { this.renderCards}
           renderNoMoreCards = { this.renderCards}
           handleShare = { this.handleShare }
+          setbookmark = {this.setbookmark}
         />
       )
     }
