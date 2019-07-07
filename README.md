@@ -1,10 +1,19 @@
 # Hermes
 **Hermes**
 
-    A News Application created using React Native and native packages to present you news withing 100 words.
+## Table of Content
+-[Hermes](#Hermes)
+    -[Introduction](#Introduction)
+    -[Installation](#Installation)
+    -[Usage](#Usage)
+    -[API's](#APIs)
+    -[Creators](#Creators)
 
-How to install
+## Introduction
+ - A News Application created using React Native and native packages to present you news withing 100 words.
 
+
+## Installation
 1.Clone the git repository:
 
 `git clone https://github.com/akhilramkee/Hermes.git`
@@ -23,12 +32,14 @@ export PATH=$PATH:$ANDROID_HOME/tools/bin
 export PATH=$PATH:$ANDROID_HOME/platform-tools
 
 ```
-
+## Usage
 Build The App:
 
 `react-native run-android`
 
 **DEPENDENCIES TO PACKAGES**
+
+## API's
 
 >[react-native-swiper](https://github.com/leecade/react-native-swiper/blob/master/src/index.js) 
 
@@ -48,3 +59,12 @@ Example of implementation of a [swiper](https://www.npmjs.com/package/react-nati
 Provides support to capture the current screen programmatically. Various implementation provides us with flexibilty to choose the suitable package as required.
 
 Example of implementation is provided in [snap-shot](https://github.com/gre/react-native-view-shot)
+
+>[PanResponder](https://facebook.github.io/react-native/docs/panresponder.html)
+
+PanResponder has been used to implement the swipe feature where swipeup tends to provide the next news and Swipedown provides the previous news that has been swiped up.
+
+## Creators
+
+**Akhilesh R**
+* [Github Profile](<https://github.com/akhilramkee>)
