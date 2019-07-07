@@ -1,11 +1,7 @@
 
 import React, { Component } from 'react';
-import { View, Text, PanResponder, Dimensions, Animated, Platform, UIManager, LayoutAnimation, Button } from 'react-native';
-
-const SCREEN_HEIGHT = Dimensions.get('window').height;
-const SCREEN_WIDTH = Dimensions.get('window').width;
-const SWIPE_THRESHOLD = 0.25 * SCREEN_HEIGHT;
-const SWIPE_OUT_DURATION = 250;
+import { View, Text, PanResponder, Dimensions, Animated, Platform, UIManager, LayoutAnimation, ToastAndroid } from 'react-native';
+import { SCREEN_HEIGHT, SCREEN_WIDTH,SWIPE_OUT_DURATION,SWIPE_THRESHOLD } from '../Component/Constants';
 
 export default class Swipe extends Component {
   static defaultProps = {
@@ -25,25 +21,45 @@ export default class Swipe extends Component {
 
     componentWillMount(){
     this._panResponder = PanResponder.create({
-      // Ask to be the responder:
+
       onStartShouldSetPanResponder: () => false,
+     
       onMoveShouldSetPanResponder: (e,gestureState) => {return !(gestureState.dx === 0 && gestureState.dy === 0)},
+     
       onPanResponderMove: (evt, gesture) => {
         if(gesture.dy > 0 && this.state.index == 0){
           this.setState({pulledUp:true});
-          this.position.setValue({ x:0, y: 0.2 * SCREEN_HEIGHT });
+          if(gesture.dy<0.2 * SCREEN_HEIGHT){
+            this.position.setValue({ x:0, y: gesture.dy });
+          }else{
+            this.position.setValue({ x:0, y: 0.2 * SCREEN_HEIGHT });
+          }
         }
         else
-          this.position.setValue({x:0,y:gesture.dy});
+          this.position.setValue({x:0,y:0});
       },
+
       onPanResponderRelease: (evt, gesture) => {
+        
         if (gesture.dy > SWIPE_THRESHOLD && this.state.index>0) {
+        
           this.forceSwipe('down');
-        } else if (gesture.dy < -SWIPE_THRESHOLD) {
-          this.setState({pulledUp:false});
+        
+        } else if (gesture.dy < -SWIPE_THRESHOLD && this.state.index<this.props.data.length-1) {
+          
+          if(this.state.pulledUp === true)
+            this.setState({pulledUp:false});
+          
           this.forceSwipe('up');
+        
         } else {
+
+          if(this.state.index === this.props.data.length-1 && gesture.dy < 0)
+            ToastAndroid.show('You have read all new messages',ToastAndroid.SHORT)
+          else if(this.state.index === 0 && gesture.dy > 0)
+            ToastAndroid.show('Refreshing',ToastAndroid.SHORT)
           this.resetPosition();
+        
         }
       },
       
@@ -65,13 +81,17 @@ export default class Swipe extends Component {
       const item = (direction==='down')?data[this.state.index]:data[this.state.index];
 
       direction === 'down' ? onSwipeDown(item) : onSwipeUp(item);
+      
       UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
-      LayoutAnimation.spring();
+      
       if(direction==='down'){
+      
           this.setState({ index: this.state.index - 1 });
           this.position.setValue({x:0, y:0});
           this.swipedCardPosition.setValue({x:0,y:-SCREEN_HEIGHT})
+      
       }else{
+         
           this.setState({ index: this.state.index + 1});
           this.position.setValue({ x: 0, y: 0 });
       }
@@ -98,6 +118,7 @@ export default class Swipe extends Component {
   }
 
   resetPosition() {
+    
     Animated.parallel([
       Animated.spring(this.position, {
         toValue: { x: 0, y: 0 }
@@ -106,6 +127,7 @@ export default class Swipe extends Component {
         toValue: {x:0,y:-SCREEN_HEIGHT}
       })
     ]).start();
+  
   }
 
   getCardStyle() {
@@ -117,12 +139,9 @@ export default class Swipe extends Component {
   }
 
   renderCards = () => {
-    if (this.state.index >= this.props.data.length) {
-      return this.props.renderNoMoreCards();
-    }
-
+    
     const deck = this.props.data.map((item, i) => {
-      if(i===this.state.index-1){
+      if(i <= this.state.index-1){
             return(
               <Animated.View
                 key = { item[this.props.keyProps]}
@@ -166,7 +185,8 @@ export default class Swipe extends Component {
     });
 
     return Platform.OS === 'android' ? deck.reverse() : deck.reverse();
-    };
+  
+  };
 
   render() {
     return <View>{this.renderCards()}</View>;
@@ -181,6 +201,8 @@ const styles = {
   },
   cardStyle: {
     position: 'absolute',
-    width: SCREEN_WIDTH
+    width: SCREEN_WIDTH,
+    backgroundColor:'black',
+    color:'white'
   }
 };

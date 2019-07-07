@@ -84,9 +84,9 @@ export default class CardPage extends Component{
           <Swiper>
               {
               item.story.map((data)=>(
-              <View style = {styles.containerStyle}>
+              <View style = {styles.containerStyle} key={item.id}>
                   <Icon
-                    containerStyle = {{ size:'2',position:'absolute',top:0,right:20,zIndex:99}}
+                    containerStyle = {{ position:'absolute',top:0,right:20,zIndex:99}}
                     name='bookmark'
                     onPress = {()=>this.setbookmark(item.id)}
                   />                            
@@ -110,7 +110,6 @@ export default class CardPage extends Component{
           keyProps = "id"
           data = {this.props.ARTICLE}
           renderCard = { this.renderCards}
-          renderNoMoreCards = { this.renderCards}
           handleShare = { this.handleShare }
           setbookmark = {this.setbookmark}
         />
