@@ -2,12 +2,14 @@
 **Hermes**
 
 ## Table of Content
--[Hermes](#Hermes)
-    -[Introduction](#Introduction)
-    -[Installation](#Installation)
-    -[Usage](#Usage)
-    -[API's](#APIs)
-    -[Creators](#Creators)
+## Table of Contents
+- [Hermes](#Hermes)
+  - [Table of Contents](#Table-of-Contents)
+  - [Introduction](#Introduction)
+  - [Installation](#Installation)
+  - [Usage](#Usage)
+  - [API's](#APIs)
+  - [Creators](#Creators)
 
 ## Introduction
  - A News Application created using React Native and native packages to present you news withing 100 words.
