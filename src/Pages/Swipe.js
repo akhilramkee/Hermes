@@ -27,16 +27,31 @@ export default class Swipe extends Component {
       onMoveShouldSetPanResponder: (e,gestureState) => {return !(gestureState.dx === 0 && gestureState.dy === 0)},
      
       onPanResponderMove: (evt, gesture) => {
+        
         if(gesture.dy > 0 && this.state.index == 0){
+          
           this.setState({pulledUp:true});
+          
           if(gesture.dy<0.2 * SCREEN_HEIGHT){
+          
             this.position.setValue({ x:0, y: gesture.dy });
+          
           }else{
+          
             this.position.setValue({ x:0, y: 0.2 * SCREEN_HEIGHT });
+          
           }
         }
-        else
-          this.position.setValue({x:0,y:0});
+        else if(gesture.dy>0){
+          
+          this.swipedCardPosition.setValue({x:0,y:-SCREEN_HEIGHT+gesture.dy})
+        
+        }else{
+          
+          this.position.setValue({x:0,y:gesture.dy});
+        
+        }
+          
       },
 
       onPanResponderRelease: (evt, gesture) => {
@@ -202,7 +217,5 @@ const styles = {
   cardStyle: {
     position: 'absolute',
     width: SCREEN_WIDTH,
-    backgroundColor:'black',
-    color:'white'
   }
 };

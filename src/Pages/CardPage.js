@@ -75,7 +75,7 @@ export default class CardPage extends Component{
     renderCards(item){
       return(
           <View style = {{ flex:1, position:'relative', height:SCREEN_HEIGHT, width: SCREEN_WIDTH, backgroundColor:'white'}} >
-            <View style = {{ flex:0.5 , backgroundColor:'white'}}>
+            <View style = {{ flex:0.5}}>
               <Image source = { item.uri}
                   style = {styles.image}
                   resizeMode="cover"
