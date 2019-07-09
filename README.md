@@ -43,6 +43,7 @@ Build The App:
 
 ## API's
 
+**Version1**
 >[react-native-swiper](https://github.com/leecade/react-native-swiper/blob/master/src/index.js) 
 
 This package helped to implement horizontal swipe feature , which is based out on ViewPagerAndroid 
@@ -52,6 +53,7 @@ The swiper is built on top of the scroll view , which tends to make it customisa
 
 Example of implementation of a [swiper](https://www.npmjs.com/package/react-native-swiper)
 
+**Version2**
 >[react-native-share](https://github.com/react-native-community/react-native-share)
 
  React-native-share provides support to share across various social platform with customizable messages.
@@ -62,9 +64,20 @@ Provides support to capture the current screen programmatically. Various impleme
 
 Example of implementation is provided in [snap-shot](https://github.com/gre/react-native-view-shot)
 
+**Version3**
 >[PanResponder](https://facebook.github.io/react-native/docs/panresponder.html)
 
 PanResponder has been used to implement the swipe feature where swipeup tends to provide the next news and Swipedown provides the previous news that has been swiped up.
+
+**Version4**
+>[react-native-fs](https://www.npmjs.com/package/react-native-fs/v/1.2.0)
+
+Native filesystem access for react-native. This package has been used to store the network image on to cache of the application.
+
+>[shorthash](https://www.npmjs.com/package/shorthash)
+
+Hashed the url with the help of shorthash to form a unique hashkey for each url and use it as filename for cache storage.
+
 
 ## Creators
 
