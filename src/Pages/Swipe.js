@@ -156,7 +156,7 @@ export default class Swipe extends Component {
   renderCards = () => {
     
     const deck = this.props.data.map((item, i) => {
-      if(i <= this.state.index-1){
+      if(i == this.state.index-1){
             return(
               <Animated.View
                 key = { item[this.props.keyProps]}

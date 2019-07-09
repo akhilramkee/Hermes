@@ -5,6 +5,7 @@ import  Swiper  from 'react-native-swiper';
 import {captureScreen} from 'react-native-view-shot';
 import  Swipe from './Swipe';
 import {Icon} from 'react-native-elements';
+import CacheImage from '../Component/CacheImage';
 
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -17,27 +18,11 @@ export default class CardPage extends Component{
 
       this.state = {
           bookmark : [],
-          imageUri: ''
+          imageUri: '',
+          showShare:true
       }
 
     }
-
-    requestExternalStoragePermission = async () => {
-      try {
-        const granted = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-          {
-            title: 'My App Storage Permission',
-            message: 'My App needs access to your storage ' +
-              'so you can save your photos',
-          },
-        );
-        return granted;
-      } catch (err) {
-        console.error('Failed to request permission ', err);
-        return null;
-      }
-    };
 
     setbookmark = (id) =>{
       if(!(this.state.bookmark.includes(id))){
@@ -47,17 +32,22 @@ export default class CardPage extends Component{
       }
     }
 
-    handleShare = () =>{
+    toggleShare = () =>{
+      this.setState({showShare:false},()=>{
+        this.handleShare();
+        this.setState({showShare:true})
+      });
+    }
 
+    handleShare = () =>{
       captureScreen({
         format: "jpg",
-        quality: 0.8
+        quality: 1
       })
       .then(
         uri => {this.setState({imageUri:uri},()=>{this.ShareImage()})},
         error => console.error("Oops, snapshot failed", error)
       );
-      
     }
 
     ShareImage = () =>{
@@ -70,15 +60,12 @@ export default class CardPage extends Component{
         Share.open(shareimage).catch(err=>console.log(err))
     }
 
-    _keyExtractor = (item,index)=>item.id;
-
     renderCards(item){
       return(
           <View style = {{ flex:1, position:'relative', height:SCREEN_HEIGHT, width: SCREEN_WIDTH, backgroundColor:'white'}} >
             <View style = {{ flex:0.5}}>
-              <Image source = { item.uri}
+              <CacheImage uri={item.uri}
                   style = {styles.image}
-                  resizeMode="cover"
               />
             </View>
           <Swiper>
@@ -91,12 +78,14 @@ export default class CardPage extends Component{
                     onPress = {()=>this.setbookmark(item.id)}
                   />                            
                   <Text style={{lineHeight:35,fontSize:25,paddingTop:20}}>{data}</Text>
+                  {this.state.showShare &&
                   <Icon
                     containerStyle={{position:'absolute',bottom:40,right:40}}
                     name='share'
                     type='FontAwesome'
-                    onPress = {this.handleShare}
+                    onPress = {this.toggleShare}
                   />
+                  }
               </View>
           ))}
       </Swiper>
@@ -112,6 +101,8 @@ export default class CardPage extends Component{
           renderCard = { this.renderCards}
           handleShare = { this.handleShare }
           setbookmark = {this.setbookmark}
+          toggleShare = {this.toggleShare}
+          state = {this.state}
         />
       )
     }

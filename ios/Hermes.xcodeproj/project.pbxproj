@@ -62,6 +62,7 @@
 		FAC12EED9E91401FBFB6CAAD /* libRNVectorIcons-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D928166F783441ABEA5A3E3 /* libRNVectorIcons-tvOS.a */; };
 		BA9A9A86E944414F931CCD1F /* libRNViewShot.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E1DB8E54EBC499A8A32BFDA /* libRNViewShot.a */; };
 		D6CA47B210E34BE292CF129D /* libRNShare.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D8DEC0FD3674F6D992DD4C8 /* libRNShare.a */; };
+		B6663BEE3B644915B3B82C5E /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B5D504B917EE42C094211103 /* libRNFS.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -395,6 +396,8 @@
 		4E1DB8E54EBC499A8A32BFDA /* libRNViewShot.a */ = {isa = PBXFileReference; name = "libRNViewShot.a"; path = "libRNViewShot.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		E26B2AF65B4E402C880AE63A /* RNShare.xcodeproj */ = {isa = PBXFileReference; name = "RNShare.xcodeproj"; path = "../node_modules/react-native-share/ios/RNShare.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		4D8DEC0FD3674F6D992DD4C8 /* libRNShare.a */ = {isa = PBXFileReference; name = "libRNShare.a"; path = "libRNShare.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		DB2B7AF516E54D308866AC95 /* RNFS.xcodeproj */ = {isa = PBXFileReference; name = "RNFS.xcodeproj"; path = "../node_modules/react-native-fs/RNFS.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		B5D504B917EE42C094211103 /* libRNFS.a */ = {isa = PBXFileReference; name = "libRNFS.a"; path = "libRNFS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -426,6 +429,7 @@
 				D412F6F807254B999EBCBA94 /* libRNVectorIcons.a in Frameworks */,
 				BA9A9A86E944414F931CCD1F /* libRNViewShot.a in Frameworks */,
 				D6CA47B210E34BE292CF129D /* libRNShare.a in Frameworks */,
+				B6663BEE3B644915B3B82C5E /* libRNFS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -619,6 +623,7 @@
 				08E705D030FA49B893B334F4 /* RNVectorIcons.xcodeproj */,
 				A3475631FFF147AC84ABD692 /* RNViewShot.xcodeproj */,
 				E26B2AF65B4E402C880AE63A /* RNShare.xcodeproj */,
+				DB2B7AF516E54D308866AC95 /* RNFS.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1297,12 +1302,14 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-view-shot/ios",
 					"$(SRCROOT)/../node_modules/react-native-share/ios",
+					"$(SRCROOT)/../node_modules/react-native-fs/**",
 				);
 			};
 			name = Debug;
@@ -1328,12 +1335,14 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-view-shot/ios",
 					"$(SRCROOT)/../node_modules/react-native-share/ios",
+					"$(SRCROOT)/../node_modules/react-native-fs/**",
 				);
 			};
 			name = Release;
@@ -1359,6 +1368,7 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-view-shot/ios",
 					"$(SRCROOT)/../node_modules/react-native-share/ios",
+					"$(SRCROOT)/../node_modules/react-native-fs/**",
 				);
 			};
 			name = Debug;
@@ -1383,6 +1393,7 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-view-shot/ios",
 					"$(SRCROOT)/../node_modules/react-native-share/ios",
+					"$(SRCROOT)/../node_modules/react-native-fs/**",
 				);
 			};
 			name = Release;
@@ -1416,12 +1427,14 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-view-shot/ios",
 					"$(SRCROOT)/../node_modules/react-native-share/ios",
+					"$(SRCROOT)/../node_modules/react-native-fs/**",
 				);
 			};
 			name = Debug;
@@ -1455,12 +1468,14 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-view-shot/ios",
 					"$(SRCROOT)/../node_modules/react-native-share/ios",
+					"$(SRCROOT)/../node_modules/react-native-fs/**",
 				);
 			};
 			name = Release;
@@ -1493,12 +1508,14 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-view-shot/ios",
 					"$(SRCROOT)/../node_modules/react-native-share/ios",
+					"$(SRCROOT)/../node_modules/react-native-fs/**",
 				);
 			};
 			name = Debug;
@@ -1531,12 +1548,14 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-view-shot/ios",
 					"$(SRCROOT)/../node_modules/react-native-share/ios",
+					"$(SRCROOT)/../node_modules/react-native-fs/**",
 				);
 			};
 			name = Release;
