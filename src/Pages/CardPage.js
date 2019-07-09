@@ -1,15 +1,13 @@
 import React , { Component } from 'react';
-import { StyleSheet, Text, View, Dimensions, Image, FlatList, Button, Alert, CameraRoll,PermissionsAndroid , ToastAndroid} from 'react-native';
+import { StyleSheet, Text, View} from 'react-native';
 import Share from 'react-native-share';
 import  Swiper  from 'react-native-swiper';
 import {captureScreen} from 'react-native-view-shot';
 import  Swipe from './Swipe';
 import {Icon} from 'react-native-elements';
 import CacheImage from '../Component/CacheImage';
-
-
-const SCREEN_HEIGHT = Dimensions.get('window').height;
-const SCREEN_WIDTH = Dimensions.get('window').width;
+import {SCREEN_HEIGHT,SCREEN_WIDTH} from '../Component/Constants';
+import ImageMarker from 'react-native-image-marker';
 
 export default class CardPage extends Component{
     
@@ -50,15 +48,16 @@ export default class CardPage extends Component{
       );
     }
 
-    ShareImage = () =>{
-        let shareimage = {
-          title:'React Native',
-          url: this.state.imageUri,
-          subject:'Share content',
-          message:'News Brought forward by Datopsys'
-        };
-        Share.open(shareimage).catch(err=>console.log(err))
-    }
+ShareImage = () =>{
+  
+      let shareimage = {
+        title:'React Native',
+        url: this.state.imageUri,
+        subject:'Share content',
+        message:'News Brought forward by Datopsys'
+      };
+      Share.open(shareimage).catch(err=>console.log(err))      
+  }
 
     renderCards(item){
       return(
@@ -76,8 +75,9 @@ export default class CardPage extends Component{
                     containerStyle = {{ position:'absolute',top:0,right:20,zIndex:99}}
                     name='bookmark'
                     onPress = {()=>this.setbookmark(item.id)}
-                  />                            
-                  <Text style={{lineHeight:35,fontSize:25,paddingTop:20}}>{data}</Text>
+                  />
+                  <Text style={styles.heading}>{item.title}</Text>                            
+                  <Text style={styles.text}>{data}</Text>
                   {this.state.showShare &&
                   <Icon
                     containerStyle={{position:'absolute',bottom:40,right:40}}
@@ -127,6 +127,21 @@ const styles = StyleSheet.create({
     marginBottom:20
   },
 
+  text:{
+    lineHeight:35,
+    fontSize:23,
+    paddingTop:20,
+    fontFamily:'sans-serif-medium'
+  },
+
+  heading:{
+    fontWeight:'bold',
+    lineHeight:45,
+    fontSize:30,
+    paddingTop:20,
+    fontFamily:'Roboto',
+    color:'black'
+  },
 
   image:{
     flex:1,
