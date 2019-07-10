@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { View, Text, PanResponder, Dimensions, Animated, Platform, UIManager, LayoutAnimation, ToastAndroid } from 'react-native';
 import { SCREEN_HEIGHT, SCREEN_WIDTH,SWIPE_OUT_DURATION,SWIPE_THRESHOLD } from '../Component/Constants';
+import { getNews } from '../Component/data';
 
 export default class Swipe extends Component {
   static defaultProps = {
@@ -14,12 +15,12 @@ export default class Swipe extends Component {
     super(props);
     this.position = new Animated.ValueXY();
     this.swipedCardPosition = new Animated.ValueXY({x:0,y:-SCREEN_HEIGHT})
-    this.state = { index: 0 , pulledUp:true};
+    this.state = { index: 0 , pulledUp:true ,data:this.props.data};
     this._panResponder = {}
   }
 
 
-    componentWillMount(){
+   componentWillMount(){
     this._panResponder = PanResponder.create({
 
       onStartShouldSetPanResponder: () => false,
@@ -71,14 +72,24 @@ export default class Swipe extends Component {
 
           if(this.state.index === this.props.data.length-1 && gesture.dy < 0)
             ToastAndroid.show('You have read all new messages',ToastAndroid.SHORT)
-          else if(this.state.index === 0 && gesture.dy > 0)
+          else if(this.state.index === 0 && gesture.dy > 0){
             ToastAndroid.show('Refreshing',ToastAndroid.SHORT)
+            this.fetchData();
+          }
+            
           this.resetPosition();
         
         }
       },
       
     });
+  }
+
+  async fetchData(){
+    const ARTICLE = await getNews();
+    if(ARTICLE !== this.state.data){
+      this.setState({data:ARTICLE},()=>ToastAndroid.show("Refreshed",ToastAndroid.SHORT))
+    }
   }
 
 
@@ -155,7 +166,7 @@ export default class Swipe extends Component {
 
   renderCards = () => {
     
-    const deck = this.props.data.map((item, i) => {
+    const deck = this.state.data.map((item, i) => {
       if(i == this.state.index-1){
             return(
               <Animated.View
