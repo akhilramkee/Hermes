@@ -3,7 +3,6 @@ package com.hermes;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.jimmydaddy.imagemarker.ImageMarkerPackage;
 import com.rnfs.RNFSPackage;
 import cl.json.RNSharePackage;
 import fr.greweb.reactnativeviewshot.RNViewShotPackage;
@@ -28,7 +27,6 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new ImageMarkerPackage(),
             new RNFSPackage(),
             new RNSharePackage(),
             new RNViewShotPackage(),
