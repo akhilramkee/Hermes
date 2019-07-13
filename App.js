@@ -7,13 +7,23 @@
  */
 
 import React, {Component} from 'react';
-import {Text,View} from 'react-native';
+import {Text,View, ToastAndroid} from 'react-native';
 import Activity from './src/Component/Activity';
 import CardPage from './src/Pages/CardPage';
 import { getNews } from './src/Component/data';
 import axios from 'axios';
+const Realm = require('realm');
 
 var ARTICLE = [];
+const ArticleSchema = {
+  name: 'Article',
+  properties: {
+    id:'string',
+    uri: 'string',
+    title:'string',
+    story: {type: 'string?[]'},
+  }
+};
 
 export default class App extends Component{
   constructor(props){
@@ -24,11 +34,23 @@ export default class App extends Component{
   }
   
   async componentDidMount(){
-
-    ARTICLE = await getNews();
+    
+  //  ToastAndroid.show(arraylist.make,ToastAndroid.SHORT);
+  ARTICLE = await getNews();
     if(ARTICLE){
       this.setState({isLoaded:true})
     }
+  ARTICLE = JSON.parse(ARTICLE);
+
+    Realm.open({schema: [ArticleSchema]})
+    .then(realm => {
+      // Create Realm objects and write to local storage
+      realm.write(() => {
+        ARTICLE.forEach(obj =>{
+          realm.create('Article',obj);
+        })
+      });
+    })
                        
   }
 

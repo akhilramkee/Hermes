@@ -19,6 +19,7 @@
     "react-native-swiper": "^1.5.14",
     "react-native-vector-icons": "^6.6.0",
     "react-native-view-shot": "^2.6.0",
+    "realm": "2.29.1",
     "shorthash": "0.0.2"
   },
   "devDependencies": {

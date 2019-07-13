@@ -3,6 +3,19 @@ import React, { Component } from 'react';
 import { View, Text, PanResponder, Dimensions, Animated, Platform, UIManager, LayoutAnimation, ToastAndroid } from 'react-native';
 import { SCREEN_HEIGHT, SCREEN_WIDTH,SWIPE_OUT_DURATION,SWIPE_THRESHOLD } from '../Component/Constants';
 import { getNews } from '../Component/data';
+import { Toast } from 'native-base';
+const Realm = require('realm');
+
+const ArticleSchema = {
+  name: 'Article',
+  properties: {
+    id:'string',
+    uri: 'string',
+    title:'string',
+    story: {type: 'string?[]'},
+  }
+};
+
 
 export default class Swipe extends Component {
   static defaultProps = {
@@ -86,7 +99,14 @@ export default class Swipe extends Component {
   }
 
   async fetchData(){
-    const ARTICLE = await getNews();
+
+    Realm.open({schema: [ArticleSchema]})
+    .then(realm => {
+      // Create Realm objects and write to local storage
+      ARTICLE = realm.objects('Article');
+     // ToastAndroid.show('No of ELements'+list.length.toString(),ToastAndroid.SHORT);
+    })
+ //   const ARTICLE = await getNews();
     if(ARTICLE !== this.state.data){
       this.setState({data:ARTICLE},()=>ToastAndroid.show("Refreshed",ToastAndroid.SHORT))
     }
