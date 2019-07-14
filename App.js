@@ -35,7 +35,18 @@ export default class App extends Component{
   
   async componentDidMount(){
     
-  //  ToastAndroid.show(arraylist.make,ToastAndroid.SHORT);
+  Realm.open({schema:[ArticleSchema]})
+        .then(realm =>{
+          if(realm.objects('Article')){
+            ARTICLE = realm.objects('Article');
+            this.setState({isLoaded:true});
+          }else{
+            ARTICLE = [];
+          }
+        })
+        .catch(err =>{
+          alert(err);
+        })
   ARTICLE = await getNews();
     if(ARTICLE){
       this.setState({isLoaded:true})
