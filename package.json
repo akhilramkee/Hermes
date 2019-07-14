@@ -10,7 +10,7 @@
     "axios": "^0.19.0",
     "native-base": "^2.12.1",
     "react": "16.8.3",
-    "react-native": "0.59.9",
+    "react-native": "0.60.3",
     "react-native-elements": "^1.1.0",
     "react-native-fontawesome": "^6.0.1",
     "react-native-fs": "^2.13.3",
@@ -20,7 +20,8 @@
     "react-native-vector-icons": "^6.6.0",
     "react-native-view-shot": "^2.6.0",
     "realm": "2.29.1",
-    "shorthash": "0.0.2"
+    "shorthash": "0.0.2",
+    "ws": "7.1.0"
   },
   "devDependencies": {
     "@babel/core": "7.4.5",
