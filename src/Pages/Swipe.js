@@ -1,21 +1,10 @@
 
 import React, { Component } from 'react';
-import { View, Text, PanResponder, Dimensions, Animated, Platform, UIManager, LayoutAnimation, ToastAndroid } from 'react-native';
+import { View, PanResponder, Animated, Platform, UIManager, ToastAndroid } from 'react-native';
 import { SCREEN_HEIGHT, SCREEN_WIDTH,SWIPE_OUT_DURATION,SWIPE_THRESHOLD } from '../Component/Constants';
-import { getNews } from '../Component/data';
-import { Toast } from 'native-base';
+import { getNews , RealmUpdate} from '../Component/data';
 const Realm = require('realm');
-
-const ArticleSchema = {
-  name: 'Article',
-  properties: {
-    id:'string',
-    uri: 'string',
-    title:'string',
-    story: {type: 'string?[]'},
-  }
-};
-
+import { ArticleSchema } from '../Component/Constants';
 
 export default class Swipe extends Component {
   static defaultProps = {
@@ -83,8 +72,10 @@ export default class Swipe extends Component {
         
         } else {
 
-          if(this.state.index === this.props.data.length-1 && gesture.dy < 0)
+          if(this.state.index === this.props.data.length-1 && gesture.dy < 0){
             ToastAndroid.show('You have read all new messages',ToastAndroid.SHORT)
+            this.fetchMore();
+          }
           else if(this.state.index === 0 && gesture.dy > 0){
             ToastAndroid.show('Refreshing',ToastAndroid.SHORT)
             this.fetchData();
@@ -98,18 +89,24 @@ export default class Swipe extends Component {
     });
   }
 
+  async fetchMore(){
+    Realm.open({schema:[ArticleSchema]})
+          .then(realm=>{
+            ARTICLE = realm.objects('Article').slice(this.state.index,this.state.index+5);
+          })
+  }
+
   async fetchData(){
 
     Realm.open({schema: [ArticleSchema]})
     .then(realm => {
-      // Create Realm objects and write to local storage
       ARTICLE = realm.objects('Article');
-     // ToastAndroid.show('No of ELements'+list.length.toString(),ToastAndroid.SHORT);
     })
- //   const ARTICLE = await getNews();
+    let ARTICLE = await getNews();
     if(ARTICLE !== this.state.data){
       this.setState({data:ARTICLE},()=>ToastAndroid.show("Refreshed",ToastAndroid.SHORT))
     }
+    await RealmUpdate(ARTICLE);
   }
 
 
