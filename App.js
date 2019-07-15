@@ -58,7 +58,8 @@ export default class App extends Component{
       // Create Realm objects and write to local storage
       realm.write(() => {
         ARTICLE.forEach(obj =>{
-          realm.create('Article',obj);
+          if(realm.objects('Article').filtered(`id=${obj.id}`).length===0)
+              realm.create('Article',obj);
         })
       });
     })
