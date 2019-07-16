@@ -3,6 +3,7 @@ package com.hermes;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import io.realm.react.RealmReactPackage;
 import com.rnfs.RNFSPackage;
 import cl.json.RNSharePackage;
@@ -28,6 +29,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNGestureHandlerPackage(),
             new RealmReactPackage(),
             new RNFSPackage(),
             new RNSharePackage(),

@@ -10,22 +10,33 @@ import React, {Component} from 'react';
 import {View} from 'react-native';
 import Activity from './src/Component/Activity';
 import CardPage from './src/Pages/CardPage';
+import { Icon } from 'react-native-elements';
 import { getNews, RealmUpdate, RealmQuery } from './src/Component/data';
-
 var ARTICLE = [];
 
 
-export default class App extends Component{
+export default class Home extends Component{
   constructor(props){
     super(props);
     this.state={
       isLoaded:false,
+      isDrawerOpen:false,
     }
+    this.toggleDraw = this.toggleDraw.bind(this);
+  }
+
+  toggleDraw(){
+    this.setState({isDrawerOpen:!this.state.isDrawerOpen},()=>{
+      if(this.state.isDrawerOpen){
+        this.props.navigation.openDrawer()
+      }else{
+        this.props.navigation.closeDrawer()
+      }
+    })
   }
   
   async componentDidMount(){
-    
-
+  
     ARTICLE = await RealmQuery();
     if(ARTICLE){
       this.setState({isLoaded:true})
@@ -36,7 +47,6 @@ export default class App extends Component{
     }
 
     await RealmUpdate(ARTICLE);
-                       
   }
 
   render() {
