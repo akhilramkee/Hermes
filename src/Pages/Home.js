@@ -8,10 +8,9 @@
 
 import React, {Component} from 'react';
 import {View} from 'react-native';
-import Activity from './src/Component/Activity';
-import CardPage from './src/Pages/CardPage';
-import { Icon } from 'react-native-elements';
-import { getNews, RealmUpdate, RealmQuery } from './src/Component/data';
+import Activity from '../Component/Activity';
+import CardPage from './CardPage';
+import { getNews, RealmUpdate, RealmQuery } from '../Component/data';
 var ARTICLE = [];
 
 
@@ -20,19 +19,8 @@ export default class Home extends Component{
     super(props);
     this.state={
       isLoaded:false,
-      isDrawerOpen:false,
     }
-    this.toggleDraw = this.toggleDraw.bind(this);
-  }
 
-  toggleDraw(){
-    this.setState({isDrawerOpen:!this.state.isDrawerOpen},()=>{
-      if(this.state.isDrawerOpen){
-        this.props.navigation.openDrawer()
-      }else{
-        this.props.navigation.closeDrawer()
-      }
-    })
   }
   
   async componentDidMount(){
