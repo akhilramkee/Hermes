@@ -19,16 +19,31 @@ export default class Home extends Component{
     super(props);
     this.state={
       isLoaded:false,
+      category:'All',
     }
 
   }
   
   async componentDidMount(){
   
-    ARTICLE = await RealmQuery();
+  /*  if(this.props.navigation.state.params.title){
+      this.setState({category:this.props.navigation.state.params.title},()=>{
+        if(this.state.category === 'All'){
+          ARTICLE = RealmQuery();
+        }
+        else
+          ARTICLE =  RealmQuery(this.state.category);
+      });
+    }*/
+    this.setState({
+      category:this.props.navigation.state.params.title
+    })
+
+    ARTICLE = await RealmQuery(this.props.navigation.state.params.title);
     if(ARTICLE){
       this.setState({isLoaded:true})
     }
+
     ARTICLE = await getNews();
     if(ARTICLE){
       this.setState({isLoaded:true})
@@ -41,7 +56,7 @@ export default class Home extends Component{
     return (
       <View>
         {this.state.isLoaded === true &&
-            <CardPage ARTICLE = {ARTICLE} />
+            <CardPage ARTICLE = {ARTICLE} category = {this.state.category}/>
         }
         {!this.state.isLoaded && 
           <Activity />

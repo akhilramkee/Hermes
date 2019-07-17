@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { View, PanResponder, Animated, Platform, UIManager, ToastAndroid } from 'react-native';
 import { SCREEN_HEIGHT, SCREEN_WIDTH,SWIPE_OUT_DURATION,SWIPE_THRESHOLD } from '../Component/Constants';
-import { getNews , RealmUpdate} from '../Component/data';
+import { getNews , RealmUpdate, RealmQuery} from '../Component/data';
 const Realm = require('realm');
 import { ArticleSchema } from '../Component/Constants';
 
@@ -17,7 +17,7 @@ export default class Swipe extends Component {
     super(props);
     this.position = new Animated.ValueXY();
     this.swipedCardPosition = new Animated.ValueXY({x:0,y:-SCREEN_HEIGHT})
-    this.state = { index: 0 , pulledUp:true ,data:this.props.data};
+    this.state = { index: 0 , pulledUp:true ,data:this.props.data, length:this.props.data.length};
     this._panResponder = {}
   }
 
@@ -63,7 +63,7 @@ export default class Swipe extends Component {
         
           this.forceSwipe('down');
         
-        } else if (gesture.dy < -SWIPE_THRESHOLD && this.state.index<this.props.data.length-1) {
+        } else if (gesture.dy < -SWIPE_THRESHOLD && this.state.index<this.state.length-1) {
           
           if(this.state.pulledUp === true)
             this.setState({pulledUp:false});
@@ -98,15 +98,12 @@ export default class Swipe extends Component {
 
   async fetchData(){
 
-    Realm.open({schema: [ArticleSchema]})
-    .then(realm => {
-      ARTICLE = realm.objects('Article');
-    })
     let ARTICLE = await getNews();
+    await RealmUpdate(ARTICLE);
+    ARTICLE = await RealmQuery(this.props.category);
     if(ARTICLE !== this.state.data){
       this.setState({data:ARTICLE},()=>ToastAndroid.show("Refreshed",ToastAndroid.SHORT))
     }
-    await RealmUpdate(ARTICLE);
   }
 
 
@@ -227,7 +224,7 @@ export default class Swipe extends Component {
         }
     });
 
-    return Platform.OS === 'android' ? deck.reverse() : deck.reverse();
+    return Platform.OS === 'android' ? deck.reverse() : deck;
   
   };
 

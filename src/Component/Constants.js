@@ -10,6 +10,7 @@ export const ArticleSchema = {
     properties: {
       id:'string',
       uri: 'string',
+      Category: 'string',
       title:'string',
       story: {type: 'string?[]'},
     }

@@ -102,6 +102,7 @@ ShareImage = () =>{
           setbookmark = {this.setbookmark}
           toggleShare = {this.toggleShare}
           state = {this.state}
+          category = { this.props.category }
         />
       )
     }
