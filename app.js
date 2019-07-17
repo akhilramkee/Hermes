@@ -7,6 +7,7 @@ import { StyleSheet } from 'react-native';
 const MenuButton = ({ navigation })=>{
     return(
         <Icon
+        size = {35}
         containerStyle ={{ left:10,zIndex:1000}}
         name ="menu"
         type = "FontAwesome"
