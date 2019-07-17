@@ -138,7 +138,8 @@ android {
 }
 
 dependencies {
-    implementation project(':react-native-image-marker')
+    implementation project(':react-native-gesture-handler')
+    implementation project(':realm')
     implementation project(':react-native-fs')
     implementation project(':react-native-share')
     implementation project(':react-native-view-shot')

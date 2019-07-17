@@ -1,7 +1,10 @@
 
 import React, { Component } from 'react';
-import { View, Text, PanResponder, Dimensions, Animated, Platform, UIManager, LayoutAnimation, ToastAndroid } from 'react-native';
+import { View, PanResponder, Animated, Platform, UIManager, ToastAndroid } from 'react-native';
 import { SCREEN_HEIGHT, SCREEN_WIDTH,SWIPE_OUT_DURATION,SWIPE_THRESHOLD } from '../Component/Constants';
+import { getNews , RealmUpdate, RealmQuery} from '../Component/data';
+const Realm = require('realm');
+import { ArticleSchema } from '../Component/Constants';
 
 export default class Swipe extends Component {
   static defaultProps = {
@@ -14,12 +17,12 @@ export default class Swipe extends Component {
     super(props);
     this.position = new Animated.ValueXY();
     this.swipedCardPosition = new Animated.ValueXY({x:0,y:-SCREEN_HEIGHT})
-    this.state = { index: 0 , pulledUp:true};
+    this.state = { index: 0 , pulledUp:true ,data:this.props.data, length:this.props.data.length};
     this._panResponder = {}
   }
 
 
-    componentWillMount(){
+   componentWillMount(){
     this._panResponder = PanResponder.create({
 
       onStartShouldSetPanResponder: () => false,
@@ -60,7 +63,7 @@ export default class Swipe extends Component {
         
           this.forceSwipe('down');
         
-        } else if (gesture.dy < -SWIPE_THRESHOLD && this.state.index<this.props.data.length-1) {
+        } else if (gesture.dy < -SWIPE_THRESHOLD && this.state.index<this.state.length-1) {
           
           if(this.state.pulledUp === true)
             this.setState({pulledUp:false});
@@ -69,16 +72,38 @@ export default class Swipe extends Component {
         
         } else {
 
-          if(this.state.index === this.props.data.length-1 && gesture.dy < 0)
+          if(this.state.index === this.props.data.length-1 && gesture.dy < 0){
             ToastAndroid.show('You have read all new messages',ToastAndroid.SHORT)
-          else if(this.state.index === 0 && gesture.dy > 0)
+            this.fetchMore();
+          }
+          else if(this.state.index === 0 && gesture.dy > 0){
             ToastAndroid.show('Refreshing',ToastAndroid.SHORT)
+            this.fetchData();
+          }
+            
           this.resetPosition();
         
         }
       },
       
     });
+  }
+
+  async fetchMore(){
+    Realm.open({schema:[ArticleSchema]})
+          .then(realm=>{
+            ARTICLE = realm.objects('Article').slice(this.state.index,this.state.index+5);
+          })
+  }
+
+  async fetchData(){
+
+    let ARTICLE = await getNews();
+    await RealmUpdate(ARTICLE);
+    ARTICLE = await RealmQuery(this.props.category);
+    if(ARTICLE !== this.state.data){
+      this.setState({data:ARTICLE},()=>ToastAndroid.show("Refreshed",ToastAndroid.SHORT))
+    }
   }
 
 
@@ -155,7 +180,7 @@ export default class Swipe extends Component {
 
   renderCards = () => {
     
-    const deck = this.props.data.map((item, i) => {
+    const deck = this.state.data.map((item, i) => {
       if(i == this.state.index-1){
             return(
               <Animated.View
@@ -199,7 +224,7 @@ export default class Swipe extends Component {
         }
     });
 
-    return Platform.OS === 'android' ? deck.reverse() : deck.reverse();
+    return Platform.OS === 'android' ? deck.reverse() : deck;
   
   };
 

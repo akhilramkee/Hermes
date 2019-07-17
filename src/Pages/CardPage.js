@@ -7,7 +7,6 @@ import  Swipe from './Swipe';
 import {Icon} from 'react-native-elements';
 import CacheImage from '../Component/CacheImage';
 import {SCREEN_HEIGHT,SCREEN_WIDTH} from '../Component/Constants';
-import ImageMarker from 'react-native-image-marker';
 
 export default class CardPage extends Component{
     
@@ -103,6 +102,7 @@ ShareImage = () =>{
           setbookmark = {this.setbookmark}
           toggleShare = {this.toggleShare}
           state = {this.state}
+          category = { this.props.category }
         />
       )
     }
