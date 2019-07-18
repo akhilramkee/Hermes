@@ -107,15 +107,6 @@ export default class Swipe extends Component {
     }
   }
 
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps.data !== this.props.data) {
-      this.setState({
-        index: 0
-      })
-    }
-  }
-
   onSwipeComplete(direction) {
 
       const { onSwipeDown, onSwipeUp, data } = this.props;
@@ -192,11 +183,6 @@ export default class Swipe extends Component {
                 <Content data = {item} />
               </Animated.View>
             )
-      }
-      else if (i<this.state.index){
-            return(
-              null  
-            )
       } else if (i === this.state.index) {
             return (
               <Animated.View
@@ -207,20 +193,17 @@ export default class Swipe extends Component {
                 <Content data = { item } />
               </Animated.View>
         );
-      }else if(!this.state.pulledUp){
+      }else if(!this.state.pulledUp && i === this.state.index+1){
         return(
               <Animated.View
               key = { item[this.props.keyProps]}
               style={[styles.cardStyle,{zIndex:99}]}
-              {...this._panResponder.panHandlers}
             >
               <Content data = { item } />
             </Animated.View>
         )}else{
           return(
-              <Animated.View style={[{backgroundColor:'black'},styles.cardStyle]}>
-
-              </Animated.View>
+              null
           )
         }
     });
