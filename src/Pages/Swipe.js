@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { View, PanResponder, Animated, Platform, UIManager, ToastAndroid } from 'react-native';
 import { SCREEN_HEIGHT, SCREEN_WIDTH,SWIPE_OUT_DURATION,SWIPE_THRESHOLD } from '../Component/Constants';
 import { getNews , RealmUpdate, RealmQuery} from '../Component/data';
+import Content from '../Component/CardContent';
 const Realm = require('realm');
 import { ArticleSchema } from '../Component/Constants';
 
@@ -92,7 +93,7 @@ export default class Swipe extends Component {
   async fetchMore(){
     Realm.open({schema:[ArticleSchema]})
           .then(realm=>{
-            ARTICLE = realm.objects('Article').slice(this.state.index,this.state.index+5);
+            ARTICLE = realm.objects('Article');
           })
   }
 
@@ -188,7 +189,7 @@ export default class Swipe extends Component {
                 style={[this.swipedCardPosition.getLayout(),styles.cardStyle,{zIndex:99}]}
                 {...this._panResponder.panHandlers}
               >
-                {this.props.renderCard(item)}
+                <Content data = {item} />
               </Animated.View>
             )
       }
@@ -203,7 +204,7 @@ export default class Swipe extends Component {
                 style={[this.getCardStyle(), styles.cardStyle, { zIndex: 99 }]}
                 {...this._panResponder.panHandlers}
               >
-                {this.props.renderCard(item)}
+                <Content data = { item } />
               </Animated.View>
         );
       }else if(!this.state.pulledUp){
@@ -213,7 +214,7 @@ export default class Swipe extends Component {
               style={[styles.cardStyle,{zIndex:99}]}
               {...this._panResponder.panHandlers}
             >
-              {this.props.renderCard(item)}
+              <Content data = { item } />
             </Animated.View>
         )}else{
           return(
@@ -224,7 +225,7 @@ export default class Swipe extends Component {
         }
     });
 
-    return Platform.OS === 'android' ? deck.reverse() : deck;
+    return Platform.OS === 'android' ? deck.reverse() : deck.reverse();
   
   };
 
