@@ -20,6 +20,7 @@ export default class CardPage extends Component{
         <Swipe
           keyProps = "id"
           data = {this.props.ARTICLE}
+          category = { this.props.category} 
         />
       )
     }
