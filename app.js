@@ -8,8 +8,8 @@ const MenuButton = ({ navigation })=>{
     return(
         <Icon
         raised
-        size = {35}
-        containerStyle ={{ top:20,left:5,zIndex:1000}}
+        size = {30}
+        containerStyle ={{ top:20,left:5,zIndex:1000, backgroundColor:'transparent'}}
         name ="menu"
         type = "FontAwesome"
         onPress = {()=> navigation.toggleDrawer()}
