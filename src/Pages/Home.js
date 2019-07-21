@@ -7,10 +7,11 @@
  */
 
 import React, {Component} from 'react';
-import {View} from 'react-native';
+import {Animated, StyleSheet} from 'react-native';
 import Activity from '../Component/Activity';
 import CardPage from './CardPage';
 import { getNews, RealmUpdate, RealmQuery } from '../Component/data';
+import Loader from 'react-native-mask-loader';
 var ARTICLE = [];
 
 
@@ -18,6 +19,7 @@ export default class Home extends Component{
   constructor(props){
     super(props);
     this.state={
+      fadeIn: new Animated.Value(0),
       isLoaded:false,
       category:'All',
     }
@@ -26,15 +28,7 @@ export default class Home extends Component{
   
   async componentDidMount(){
   
-  /*  if(this.props.navigation.state.params.title){
-      this.setState({category:this.props.navigation.state.params.title},()=>{
-        if(this.state.category === 'All'){
-          ARTICLE = RealmQuery();
-        }
-        else
-          ARTICLE =  RealmQuery(this.state.category);
-      });
-    }*/
+
     this.setState({
       category:this.props.navigation.state.params.title
     })
@@ -42,6 +36,15 @@ export default class Home extends Component{
     ARTICLE = await RealmQuery(this.props.navigation.state.params.title);
     if(ARTICLE){
       this.setState({isLoaded:true})
+    }
+
+    if(this.state.isLoaded === true){
+      Animated.timing(
+        this.state.fadeIn,{
+          toValue:1,
+          duration:500
+        }
+      ).start();
     }
 
     ARTICLE = await getNews();
@@ -53,15 +56,21 @@ export default class Home extends Component{
   }
 
   render() {
+    let { fadeIn } = this.state;
     return (
-      <View>
-        {this.state.isLoaded === true &&
-            <CardPage ARTICLE = {ARTICLE} category = {this.state.category}/>
-        }
-        {!this.state.isLoaded && 
-          <Activity />
-        }
-      </View>
+      <Animated.View
+        style = {{
+          opacity:{fadeIn}
+        }}
+      >
+          <CardPage ARTICLE = {ARTICLE} />
+      </Animated.View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  loadingBackgroundStyle:{
+    backgroundColor:'blue'
+  }
+})

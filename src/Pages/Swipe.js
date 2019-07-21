@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { View, PanResponder, Animated, Platform, UIManager, ToastAndroid } from 'react-native';
+import { View, PanResponder, Animated, Platform, UIManager, ToastAndroid ,Easing} from 'react-native';
 import { SCREEN_HEIGHT, SCREEN_WIDTH,SWIPE_OUT_DURATION,SWIPE_THRESHOLD } from '../Component/Constants';
 import { getNews , RealmUpdate, RealmQuery} from '../Component/data';
 import Content from '../Component/CardContent';
@@ -135,14 +135,14 @@ export default class Swipe extends Component {
       if(direction ==='down'){
           Animated.timing(this.swipedCardPosition, {
             toValue: { x:0, y:0 },
-            duration: SWIPE_OUT_DURATION
+            duration: SWIPE_OUT_DURATION,
           }).start(() => {
               this.onSwipeComplete(direction)
           });
       }else{
           Animated.timing(this.position,{
             toValue: {x:0, y},
-            duration: SWIPE_OUT_DURATION
+            duration: SWIPE_OUT_DURATION,
           }).start(()=> {
               this.onSwipeComplete(direction)
           });
@@ -152,11 +152,15 @@ export default class Swipe extends Component {
   resetPosition() {
     
     Animated.parallel([
-      Animated.spring(this.position, {
-        toValue: { x: 0, y: 0 }
+      Animated.timing(this.position, {
+        toValue: { x: 0, y: 0 },
+        duration:SWIPE_OUT_DURATION,
+        easing:Easing.cubic
       }),
-      Animated.spring(this.swipedCardPosition,{
-        toValue: {x:0,y:-SCREEN_HEIGHT}
+      Animated.timing(this.swipedCardPosition,{
+        toValue: {x:0,y:-SCREEN_HEIGHT},
+        duration:SWIPE_OUT_DURATION,
+        easing:Easing.cubic
       })
     ]).start();
   
