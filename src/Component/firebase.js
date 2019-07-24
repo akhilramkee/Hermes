@@ -2,7 +2,7 @@ import firebase from 'react-native-firebase';
 import {AsyncStorage} from 'react-native';
 
 export default class Firebase{
-     async checkPermission() {
+    async checkPermission() {
     const enabled = await firebase.messaging().hasPermission();
     if (enabled) {
       this.getToken();
@@ -13,12 +13,12 @@ export default class Firebase{
 
   //3
   async getToken() {
-    let fcmToken = await AsyncStorage.getItem('fcmToken');
+    let fcmToken = AsyncStorage.getItem('fcmToken');
     if (!fcmToken) {
-      fcmToken = await firebase.messaging().getToken();
+      fcmToken = firebase.messaging().getToken();
       if (fcmToken) {
         // user has a device token
-        console.log('fcmToken:', fcmToken);
+        console.log('FcmToken',fcmToken);
         await AsyncStorage.setItem('fcmToken', fcmToken);
       }
     }
@@ -41,7 +41,7 @@ export default class Firebase{
     /*
     * Triggered when a particular notification has been received in foreground
     * */
-    this.notificationListener = firebase.notifications().onNotification((notification) => {
+  /*  this.notificationListener = firebase.notifications().onNotification((notification) => {
       const { title, body } = notification;
       console.log('onNotification:');
       
@@ -61,11 +61,10 @@ export default class Firebase{
         firebase.notifications()
           .displayNotification(localNotification)
           .catch(err => console.error(err));
-    });
+    });*/
 
-    const channel = new firebase.notifications.Android.Channel('fcm_FirebaseNotifiction_default_channel', 'Demo app name', firebase.notifications.Android.Importance.High)
-      .setDescription('Demo app description')
-      .setSound('sampleaudio.wav');
+    const channel = new firebase.notifications.Android.Channel('fcm_FirebaseNotifiction_default_channel', 'Hermes', firebase.notifications.Android.Importance.High)
+      .setDescription('News Application')
     firebase.notifications().android.createChannel(channel);
 
     /*

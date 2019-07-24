@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { View, PanResponder, Animated, Platform, UIManager, ToastAndroid ,Easing} from 'react-native';
+import { View, PanResponder, Animated, Platform, UIManager, ToastAndroid ,Easing, AsyncStorage} from 'react-native';
 import { SCREEN_HEIGHT, SCREEN_WIDTH,SWIPE_OUT_DURATION,SWIPE_THRESHOLD } from '../Component/Constants';
 import { getNews , RealmUpdate, RealmQuery} from '../Component/data';
 import Content from '../Component/CardContent';

@@ -5,7 +5,7 @@ import android.app.Application;
 import com.facebook.react.ReactApplication;
 import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
-import io.invertase.firebase.RNFirebaseAdMobPackage;
+import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import io.realm.react.RealmReactPackage;
@@ -34,8 +34,8 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
             new RNFirebasePackage(),
+            new RNFirebaseNotificationsPackage(),
             new RNFirebaseMessagingPackage(),
-            new RNFirebaseAdMobPackage(),
             new SplashScreenReactPackage(),
             new RNGestureHandlerPackage(),
             new RealmReactPackage(),
