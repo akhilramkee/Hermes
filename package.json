@@ -25,7 +25,7 @@
     "react-navigation": "3.11.1",
     "realm": "2.29.1",
     "shorthash": "0.0.2",
-    "ws": "7.1.0"
+    "ws": "7.4.6"
   },
   "devDependencies": {
     "@babel/core": "7.4.5",
